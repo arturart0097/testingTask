@@ -73,3 +73,13 @@
   letter-spacing: 0.20002500712871552px;
   text-align: left;
 }
+
+.content__userList-deleteUser {
+  width: 24px;
+  height: 24px;
+  margin-top: 13px;
+  margin-left: 10px;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}

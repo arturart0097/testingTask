@@ -30,6 +30,11 @@ const CustomCheckbox = styled(Checkbox)(({ theme, checked }) => ({
   borderRadius: 0,
 }));
 
+const CustomDropdownIcon = styled("svg")(({ open }) => ({
+  transform: open ? "rotate(180deg)" : "rotate(0deg)",
+  transition: "transform 0.3s ease",
+}));
+
 const CustomSelect = styled(Select)(() => ({
   width: 220,
   height: 48,
@@ -43,12 +48,21 @@ const defaultNames = [];
 
 function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
   const [selectedNames, setSelectedNames] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
     setSelectedNames(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -59,6 +73,8 @@ function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
           multiple
           value={selectedNames}
           onChange={handleChange}
+          onOpen={handleOpen}
+          onClose={handleClose}
           renderValue={() =>
             selectedNames.length > 0
               ? `Selected (${selectedNames.length})`
@@ -66,8 +82,48 @@ function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
           }
           MenuProps={MenuProps}
           displayEmpty
+          IconComponent={() => (
+            <div
+              style={{
+                width: "32px",
+                height: "32px",
+                padding: "8px 0px 0px 0px",
+                gap: "10px",
+              }}
+            >
+              <CustomDropdownIcon
+                open={open}
+                width="12"
+                height="7"
+                viewBox="0 0 12 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.2649 6.265C11.1946 6.33522 11.0993 6.37467 10.9999 6.37467C10.9005 6.37467 10.8052 6.33522 10.7349 6.265L5.99992 1.53062L1.26492 6.265C1.19384 6.33124 1.09981 6.3673 1.00266 6.36559C0.905511 6.36387 0.812819 6.32452 0.744112 6.25581C0.675406 6.1871 0.63605 6.09441 0.634336 5.99726C0.632622 5.90011 0.668683 5.80609 0.734923 5.735L5.73492 0.734998C5.80524 0.664773 5.90055 0.625328 5.99992 0.625328C6.0993 0.625328 6.19461 0.664773 6.26492 0.734998L11.2649 5.735C11.3351 5.80531 11.3746 5.90062 11.3746 6C11.3746 6.09937 11.3351 6.19469 11.2649 6.265Z"
+                  fill="#1B2438"
+                />
+              </CustomDropdownIcon>
+            </div>
+          )}
           sx={
-            selectedNames.length > 0 ? { color: "#000" } : { color: "#C2C2C2" }
+            selectedNames.length > 0
+              ? {
+                  fontFamily: "Rubik",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  letterSpacing: "0.20002500712871552px",
+                  textAlign: "left",
+                  color: "#000",
+                }
+              : {
+                  fontFamily: "Rubik",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  letterSpacing: "0.20002500712871552px",
+                  textAlign: "left",
+                  color: "#C2C2C2",
+                }
           }
         >
           {names.map((name) => (
