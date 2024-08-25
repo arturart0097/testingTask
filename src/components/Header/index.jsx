@@ -1,10 +1,15 @@
-import "./style.css"
+import { NavLink } from "react-router-dom";
+import "./style.css";
 
 export default function Header() {
   return (
     <header>
-      <button>Edit User</button>
-      <button>Users</button>
+      <NavLink to="/edit-user">
+        <button>Edit User</button>
+      </NavLink>
+      <NavLink to="/">
+        <button>Users</button>
+      </NavLink>
     </header>
   );
 }

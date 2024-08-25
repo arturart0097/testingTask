@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./pages/RootLayout.jsx";
 import Users from "./pages/Users/index.jsx";
+import EditUser from "./pages/EditUser/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/edit-user",
+        element: <EditUser />,
       },
     ],
   },

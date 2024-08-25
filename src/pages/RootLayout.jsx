@@ -6,7 +6,6 @@ export default function RootLayout() {
     <>
       <Header />
       <Outlet />
-      <h3>123123123</h3>
     </>
   );
 }
