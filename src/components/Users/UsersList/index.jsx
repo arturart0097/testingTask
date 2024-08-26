@@ -1,10 +1,14 @@
-import { Users } from "../../../assets/Data";
+import { useState } from "react";
+import { Users as allUsers } from "../../../assets/Data";
 import "./style.css";
 
 export default function UsersList({ filters }) {
   const { departments, countries, statuses } = filters;
 
-  const filteredUsers = Users.filter((user) => {
+  // State to manage the list of users
+  const [users, setUsers] = useState(allUsers);
+
+  const filteredUsers = users.filter((user) => {
     const departmentMatch =
       departments.length === 0 || departments.includes(user.department.name);
     const countryMatch =
@@ -14,6 +18,12 @@ export default function UsersList({ filters }) {
 
     return departmentMatch && countryMatch && statusMatch;
   });
+
+  const deleteUserHandler = (userName) => {
+    // Filter out the user to be deleted
+    const updatedUsers = users.filter((user) => user.name !== userName);
+    setUsers(updatedUsers);
+  };
 
   return (
     <div className="content__userList">
@@ -46,7 +56,10 @@ export default function UsersList({ filters }) {
             <div className="content__userList-title-status">
               <p>{el.status.name}</p>
             </div>
-            <button className="content__userList-deleteUser">
+            <button
+              onClick={() => deleteUserHandler(el.name)}
+              className="content__userList-deleteUser"
+            >
               <svg
                 width="20"
                 height="20"
