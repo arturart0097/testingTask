@@ -45,17 +45,14 @@ const CustomSelect = styled(Select)(() => ({
   border: "1px solid #E3E8EE",
 }));
 
-const defaultNames = [];
-
-function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
-  const [selectedNames, setSelectedNames] = React.useState([]);
+function MultipleSelectCheckmarks({ names, selectTitle, selectedNames, onChange, disabled }) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedNames(typeof value === "string" ? value.split(",") : value);
+    onChange(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleOpen = () => {
@@ -126,6 +123,7 @@ function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
                   color: "#C2C2C2",
                 }
           }
+          disabled={disabled}
         >
           {names.map((name) => (
             <MenuItem
@@ -165,8 +163,11 @@ function MultipleSelectCheckmarks({ names = defaultNames, selectTitle }) {
 }
 
 MultipleSelectCheckmarks.propTypes = {
-  names: PropTypes.arrayOf(PropTypes.string),
-  selectTitle: PropTypes.string,
+  names: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectTitle: PropTypes.string.isRequired,
+  selectedNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default MultipleSelectCheckmarks;

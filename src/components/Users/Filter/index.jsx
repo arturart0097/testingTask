@@ -1,8 +1,54 @@
+import { useState } from "react";
 import { Countries, Departments, Statuses } from "../../../assets/Data";
 import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarksUsers";
 import "./style.css";
 
-export default function Filter() {
+export default function Filter({ onFiltersChange }) {
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
+
+  const handleDepartmentsChange = (selected) => {
+    setSelectedDepartments(selected);
+    if (selected.length < 3) {
+      setSelectedCountries([]);
+      setSelectedStatuses([]);
+    }
+    onFiltersChange({
+      departments: selected,
+      countries: selectedCountries,
+      statuses: selectedStatuses,
+    });
+  };
+
+  const handleCountriesChange = (selected) => {
+    if (selectedDepartments.length >= 3) {
+      setSelectedCountries(selected);
+      onFiltersChange({
+        departments: selectedDepartments,
+        countries: selected,
+        statuses: selectedStatuses,
+      });
+    }
+  };
+
+  const handleStatusesChange = (selected) => {
+    if (selectedDepartments.length >= 3) {
+      if (selected === "All Statuses") {
+        setSelectedStatuses(["Active", "Disabled"]);
+      } else {
+        setSelectedStatuses(selected);
+      }
+
+      onFiltersChange({
+        departments: selectedDepartments,
+        countries: selectedCountries,
+        statuses:
+          selected === "All Statuses" ? ["Active", "Disabled"] : selected,
+      });
+    }
+  };
+
   return (
     <div className="content__user-filter-container">
       <div className="content__user-managment">
@@ -10,14 +56,22 @@ export default function Filter() {
           <MultipleSelectCheckmarks
             names={Departments.map((el) => el.name)}
             selectTitle="Departments"
+            selectedNames={selectedDepartments}
+            onChange={handleDepartmentsChange}
           />
           <MultipleSelectCheckmarks
             names={Countries.map((el) => el.name)}
             selectTitle="Countries"
+            selectedNames={selectedCountries}
+            onChange={handleCountriesChange}
+            disabled={selectedDepartments.length < 3}
           />
           <MultipleSelectCheckmarks
             names={Statuses.map((el) => el.name)}
             selectTitle="Statuses"
+            selectedNames={selectedStatuses}
+            onChange={handleStatusesChange}
+            disabled={selectedDepartments.length < 3}
           />
           <button className="content__user-managment-deleteIcon">
             <svg
