@@ -4,8 +4,8 @@ import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./pages/RootLayout.jsx";
-import Users from "./pages/UsersPage/index.jsx";
-import EditUser from "./pages/EditUser/index.jsx";
+import UsersPage from "./pages/UsersPage/index.jsx";
+import EditUserPage from "./pages/EditUserPage/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +14,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Users />,
+        element: <UsersPage />,
       },
       {
         path: "/edit-user",
-        element: <EditUser />,
+        element: <EditUserPage />,
       },
     ],
   },

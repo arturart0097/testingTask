@@ -42,6 +42,7 @@ const CustomSelect = styled(Select)(() => ({
   padding: "8px 12px 8px 24px",
   gap: "12px",
   position: "relative",
+  border: "1px solid #E3E8EE",
 }));
 
 const defaultNames = [];

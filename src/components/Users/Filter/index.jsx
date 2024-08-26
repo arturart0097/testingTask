@@ -1,5 +1,5 @@
 import { Countries, Departments, Statuses } from "../../../assets/Data";
-import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarks";
+import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarksUsers";
 import "./style.css";
 
 export default function Filter() {

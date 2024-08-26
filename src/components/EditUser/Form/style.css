@@ -1,0 +1,48 @@
+.form__userName {
+  width: 500px;
+  height: 72px;
+  gap: 4px;
+  margin-top: 70px;
+}
+
+.form label {
+  font-family: Rubik;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.20002500712871552px;
+  text-align: left;
+  color: #5e626b;
+}
+
+.form__userInformation {
+  width: 100%;
+  height: 256px;
+  gap: 40px;
+  margin-top: 70px;
+}
+
+.form__userInformation-title > h3 {
+  font-family: Rubik;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0.20000000298023224px;
+  text-align: left;
+}
+
+.form__userInformation-row {
+  width: 100%;
+  height: 72px;
+  gap: 80px;
+  margin-top: 50px;
+  display: flex;
+}
+
+.form__userInformation-column {
+  width: 500px;
+  height: 72px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+}

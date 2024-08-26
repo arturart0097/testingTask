@@ -6,7 +6,7 @@ main {
     box-sizing: border-box;
   }
   
-  main > .content {
+  main > .content, main > .contentUserEdit {
     width: 100%;
     height: 808px;
     padding: 60px 80px 80px 80px;
