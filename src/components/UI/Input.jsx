@@ -1,10 +1,16 @@
 import TextField from "@mui/material/TextField";
 
-export default function Input() {
+export default function Input({ onChange, value }) {
+  const handleChange = (event) => {
+    onChange(event);
+  };
+
   return (
     <TextField
       id="outlined-basic"
       variant="outlined"
+      onChange={handleChange}
+      value={value}
       InputProps={{
         sx: {
           width: 500,

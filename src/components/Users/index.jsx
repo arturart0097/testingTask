@@ -22,7 +22,8 @@ export default function Users() {
         </div>
         <div className="content__user">
           <p>
-            Please add at least 3 departments to be able to proceed to the next steps.
+            Please add at least 3 departments to be able to proceed to the next
+            steps.
           </p>
           <Filter onFiltersChange={handleFiltersChange} />
         </div>

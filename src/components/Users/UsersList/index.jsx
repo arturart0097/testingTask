@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { Users as allUsers } from "../../../assets/Data";
+import React from "react";
+import { useUserContext } from "../../../assets/context";
 import "./style.css";
 
-export default function UsersList({ filters }) {
+export default function UsersList() {
+  const { users, filters, updateUser } = useUserContext();
   const { departments, countries, statuses } = filters;
-
-  // State to manage the list of users
-  const [users, setUsers] = useState(allUsers);
 
   const filteredUsers = users.filter((user) => {
     const departmentMatch =
@@ -20,9 +18,8 @@ export default function UsersList({ filters }) {
   });
 
   const deleteUserHandler = (userName) => {
-    // Filter out the user to be deleted
     const updatedUsers = users.filter((user) => user.name !== userName);
-    setUsers(updatedUsers);
+    updateUser(updatedUsers);
   };
 
   return (

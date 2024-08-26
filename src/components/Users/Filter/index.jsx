@@ -1,36 +1,26 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useUserContext } from "../../../assets/context";
 import { Countries, Departments, Statuses } from "../../../assets/Data";
 import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarksUsers";
 import "./style.css";
 
-export default function Filter({ onFiltersChange }) {
-  const [selectedDepartments, setSelectedDepartments] = useState([]);
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedStatuses, setSelectedStatuses] = useState([]);
+export default function Filter() {
+  const { filters, updateFilters } = useUserContext();
+  const [selectedDepartments, setSelectedDepartments] = useState(filters.departments);
+  const [selectedCountries, setSelectedCountries] = useState(filters.countries);
+  const [selectedStatuses, setSelectedStatuses] = useState(filters.statuses);
 
   useEffect(() => {
-    // Reset other filters when the number of selected departments is less than 3
     if (selectedDepartments.length < 3) {
       setSelectedCountries([]);
       setSelectedStatuses([]);
-      onFiltersChange({
-        departments: selectedDepartments,
-        countries: [],
-        statuses: [],
-      });
-    } else {
-      onFiltersChange({
-        departments: selectedDepartments,
-        countries: selectedCountries,
-        statuses: selectedStatuses,
-      });
     }
-  }, [
-    selectedDepartments,
-    selectedCountries,
-    selectedStatuses,
-    onFiltersChange,
-  ]);
+    updateFilters({
+      departments: selectedDepartments,
+      countries: selectedCountries,
+      statuses: selectedStatuses,
+    });
+  }, [selectedDepartments, selectedCountries, selectedStatuses, updateFilters]);
 
   const handleDepartmentsChange = (selected) => {
     setSelectedDepartments(selected);
@@ -44,17 +34,9 @@ export default function Filter({ onFiltersChange }) {
 
   const handleStatusesChange = (selected) => {
     if (selectedDepartments.length >= 3) {
-      if (selected === "All Statuses") {
-        setSelectedStatuses(["Active", "Disabled"]);
-      } else {
-        setSelectedStatuses(selected);
-      }
-      onFiltersChange({
-        departments: selectedDepartments,
-        countries: selectedCountries,
-        statuses:
-          selected === "All Statuses" ? ["Active", "Disabled"] : selected,
-      });
+      setSelectedStatuses(
+        selected === "All Statuses" ? ["Active", "Disabled"] : selected
+      );
     }
   };
 
@@ -62,7 +44,7 @@ export default function Filter({ onFiltersChange }) {
     setSelectedDepartments([]);
     setSelectedCountries([]);
     setSelectedStatuses([]);
-    onFiltersChange({
+    updateFilters({
       departments: [],
       countries: [],
       statuses: [],

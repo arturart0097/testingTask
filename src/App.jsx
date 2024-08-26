@@ -1,9 +1,7 @@
+import UsersPage from "./pages/UsersPage";
+
 function App() {
-  return (
-    <>
-      <h1>starting...</h1>
-    </>
-  );
+  return <UsersPage />;
 }
 
 export default App;

@@ -49,12 +49,11 @@ const CustomDropdownIcon = styled("svg")(({ open }) => ({
   transition: "transform 0.3s ease",
 }));
 
-function MultipleSelect({ names = [] }) {
-  const [selectedName, setSelectedName] = React.useState("");
+function MultipleSelect({ names = [], value, onChange }) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
-    setSelectedName(event.target.value);
+    onChange(event.target.value);
   };
 
   const handleOpen = () => {
@@ -68,8 +67,7 @@ function MultipleSelect({ names = [] }) {
   return (
     <FormControl sx={{ width: 500 }}>
       <CustomSelect
-        id="demo-single-name"
-        value={selectedName}
+        value={value}
         onChange={handleChange}
         onOpen={handleOpen}
         onClose={handleClose}
@@ -99,7 +97,7 @@ function MultipleSelect({ names = [] }) {
           </div>
         )}
         sx={
-          selectedName
+          value
             ? {
                 fontFamily: "Rubik",
                 fontSize: 14,
@@ -130,6 +128,8 @@ function MultipleSelect({ names = [] }) {
 
 MultipleSelect.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string),
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default MultipleSelect;
