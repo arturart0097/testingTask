@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUserContext } from "../../assets/context";
 import Form from "./Form";
 import "./style.css";
@@ -6,44 +6,58 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditUser() {
   const { users, updateUser } = useUserContext();
-  const [formData, setFormData] = useState(null);
-  const [initialFormData, setInitialFormData] = useState(null);
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const [formData, setFormData] = useState({
+    name: "",
+    department: "",
+    country: "",
+    status: "",
+  });
+  const [initialFormData, setInitialFormData] = useState({
+    name: "",
+    department: "",
+    country: "",
+    status: "",
+  });
+  const refFormData = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the user data based on some identifier, e.g., userId from params
-    const exampleInitialData = {
+    setInitialFormData({
       name: "",
       department: "",
       country: "",
       status: "",
-    };
-
-    setInitialFormData(exampleInitialData);
-    setFormData(exampleInitialData);
+    });
+    setFormData({
+      name: "",
+      department: "",
+      country: "",
+      status: "",
+    });
   }, []);
+
+  useEffect(() => {
+    refFormData.current = formData;
+  }, [formData.name]);
+
+  console.log(formData);
+  console.log(refFormData.current);
 
   const handleFormChange = (data) => {
     setFormData(data);
   };
 
   const hasChanges =
-    initialFormData &&
-    formData &&
     JSON.stringify(formData) !== JSON.stringify(initialFormData);
 
-  const isFormValid =
-    formData &&
-    Object.values(formData).every(
-      (value) => typeof value === "string" && value.trim() !== ""
-    );
+  const isFormValid = Object.values(formData).every(
+    (value) => typeof value === "string" && value.trim() !== ""
+  );
 
   const isSaveEnabled = hasChanges && isFormValid;
 
   const handleSave = () => {
     if (isSaveEnabled) {
-      console.log("Saving user data:", formData);
-
       const updatedUsers = users.map((user) =>
         user.name === formData.name
           ? {
@@ -81,14 +95,14 @@ export default function EditUser() {
           value: formData.country.toUpperCase().slice(0, 2),
         },
       });
+      refFormData.current = formData;
 
-      // Navigate to the home page after saving
       navigate("/");
     }
   };
 
   const handleUndo = () => {
-    setFormData(initialFormData);
+    setInitialFormData(refFormData.current);
   };
 
   return (
@@ -102,7 +116,13 @@ export default function EditUser() {
         </div>
         <div className="content__buttons">
           <div className="content__buttons-undo">
-            <button onClick={handleUndo}>Undo</button>
+            <button
+              onClick={handleUndo}
+              disabled={!hasChanges}
+              style={{ visibility: hasChanges ? "visible" : "hidden" }}
+            >
+              Undo
+            </button>
           </div>
           <div className="content__buttons-save">
             <button
