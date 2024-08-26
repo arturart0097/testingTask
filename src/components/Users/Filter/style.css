@@ -17,6 +17,7 @@
     border: 1px solid #c4c4c4;
     background: #fff;
     margin-top: 8px;
+    cursor: pointer;
   }
   
   .content__user-managment-addUser > button {

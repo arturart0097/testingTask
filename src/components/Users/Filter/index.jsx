@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Countries, Departments, Statuses } from "../../../assets/Data";
 import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarksUsers";
 import "./style.css";
@@ -8,27 +8,37 @@ export default function Filter({ onFiltersChange }) {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
 
-  const handleDepartmentsChange = (selected) => {
-    setSelectedDepartments(selected);
-    if (selected.length < 3) {
+  useEffect(() => {
+    // Reset other filters when the number of selected departments is less than 3
+    if (selectedDepartments.length < 3) {
       setSelectedCountries([]);
       setSelectedStatuses([]);
+      onFiltersChange({
+        departments: selectedDepartments,
+        countries: [],
+        statuses: [],
+      });
+    } else {
+      onFiltersChange({
+        departments: selectedDepartments,
+        countries: selectedCountries,
+        statuses: selectedStatuses,
+      });
     }
-    onFiltersChange({
-      departments: selected,
-      countries: selectedCountries,
-      statuses: selectedStatuses,
-    });
+  }, [
+    selectedDepartments,
+    selectedCountries,
+    selectedStatuses,
+    onFiltersChange,
+  ]);
+
+  const handleDepartmentsChange = (selected) => {
+    setSelectedDepartments(selected);
   };
 
   const handleCountriesChange = (selected) => {
     if (selectedDepartments.length >= 3) {
       setSelectedCountries(selected);
-      onFiltersChange({
-        departments: selectedDepartments,
-        countries: selected,
-        statuses: selectedStatuses,
-      });
     }
   };
 
@@ -39,7 +49,6 @@ export default function Filter({ onFiltersChange }) {
       } else {
         setSelectedStatuses(selected);
       }
-
       onFiltersChange({
         departments: selectedDepartments,
         countries: selectedCountries,
@@ -47,6 +56,17 @@ export default function Filter({ onFiltersChange }) {
           selected === "All Statuses" ? ["Active", "Disabled"] : selected,
       });
     }
+  };
+
+  const resetFilterHandler = () => {
+    setSelectedDepartments([]);
+    setSelectedCountries([]);
+    setSelectedStatuses([]);
+    onFiltersChange({
+      departments: [],
+      countries: [],
+      statuses: [],
+    });
   };
 
   return (
@@ -73,7 +93,10 @@ export default function Filter({ onFiltersChange }) {
             onChange={handleStatusesChange}
             disabled={selectedDepartments.length < 3}
           />
-          <button className="content__user-managment-deleteIcon">
+          <button
+            onClick={resetFilterHandler}
+            className="content__user-managment-deleteIcon"
+          >
             <svg
               width="20"
               height="20"
