@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 
-export default function Input({ onChange, value }) {
+export default function Input({ onChange, value, width }) {
   const handleChange = (event) => {
     onChange(event);
   };
@@ -13,7 +13,7 @@ export default function Input({ onChange, value }) {
       value={value}
       InputProps={{
         sx: {
-          width: 500,
+          width: [500, width],
           height: 48,
           padding: "8px 12px 8px 24px",
           gap: 12,

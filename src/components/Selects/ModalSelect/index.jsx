@@ -18,7 +18,7 @@ const MenuProps = {
 };
 
 const CustomSelect = styled(Select)(() => ({
-  width: 500,
+  width: 280,
   height: 48,
   fontWeight: "bold",
   padding: "8px 12px 8px 24px",
@@ -49,7 +49,7 @@ const CustomDropdownIcon = styled("svg")(({ open }) => ({
   transition: "transform 0.3s ease",
 }));
 
-function MultipleSelect({ names = [], value, onChange }) {
+function ModalSelect({ names = [], value, onChange }) {
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
@@ -65,7 +65,7 @@ function MultipleSelect({ names = [], value, onChange }) {
   };
 
   return (
-    <FormControl sx={{ width: 500 }}>
+    <FormControl sx={{ width: 280 }}>
       <CustomSelect
         value={value}
         onChange={handleChange}
@@ -127,10 +127,10 @@ function MultipleSelect({ names = [], value, onChange }) {
   );
 }
 
-MultipleSelect.propTypes = {
+ModalSelect.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string),
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
-export default MultipleSelect;
+export default ModalSelect;

@@ -54,7 +54,8 @@ export default function EditUser() {
     (value) => typeof value === "string" && value.trim() !== ""
   );
 
-  const isSaveEnabled = hasChanges && isFormValid;
+  const isSaveEnabled =
+    hasChanges && isFormValid && refFormData.current !== formData;
 
   const handleSave = () => {
     if (isSaveEnabled) {
@@ -118,7 +119,6 @@ export default function EditUser() {
           <div className="content__buttons-undo">
             <button
               onClick={handleUndo}
-              disabled={!hasChanges}
               style={{ visibility: hasChanges ? "visible" : "hidden" }}
             >
               Undo

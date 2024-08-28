@@ -3,12 +3,16 @@ import { useUserContext } from "../../../assets/context";
 import { Countries, Departments, Statuses } from "../../../assets/Data";
 import MultipleSelectCheckmarks from "../../../components/Selects/SelectMarksUsers";
 import "./style.css";
+import Modal from "../../Modal";
 
 export default function Filter() {
   const { filters, updateFilters } = useUserContext();
-  const [selectedDepartments, setSelectedDepartments] = useState(filters.departments);
+  const [selectedDepartments, setSelectedDepartments] = useState(
+    filters.departments
+  );
   const [selectedCountries, setSelectedCountries] = useState(filters.countries);
   const [selectedStatuses, setSelectedStatuses] = useState(filters.statuses);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (selectedDepartments.length < 3) {
@@ -51,52 +55,65 @@ export default function Filter() {
     });
   };
 
+  const openModalHandler = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const showModalHandler = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
-    <div className="content__user-filter-container">
-      <div className="content__user-managment">
-        <div className="content__user-managment-filter">
-          <MultipleSelectCheckmarks
-            names={Departments.map((el) => el.name)}
-            selectTitle="Departments"
-            selectedNames={selectedDepartments}
-            onChange={handleDepartmentsChange}
-          />
-          <MultipleSelectCheckmarks
-            names={Countries.map((el) => el.name)}
-            selectTitle="Countries"
-            selectedNames={selectedCountries}
-            onChange={handleCountriesChange}
-            disabled={selectedDepartments.length < 3}
-          />
-          <MultipleSelectCheckmarks
-            names={Statuses.map((el) => el.name)}
-            selectTitle="Statuses"
-            selectedNames={selectedStatuses}
-            onChange={handleStatusesChange}
-            disabled={selectedDepartments.length < 3}
-          />
-          <button
-            onClick={resetFilterHandler}
-            className="content__user-managment-deleteIcon"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+    <>
+      <div className="content__user-filter-container">
+        <div className="content__user-managment">
+          <div className="content__user-managment-filter">
+            <MultipleSelectCheckmarks
+              names={Departments.map((el) => el.name)}
+              selectTitle="Departments"
+              selectedNames={selectedDepartments}
+              onChange={handleDepartmentsChange}
+            />
+            <MultipleSelectCheckmarks
+              names={Countries.map((el) => el.name)}
+              selectTitle="Countries"
+              selectedNames={selectedCountries}
+              onChange={handleCountriesChange}
+              disabled={selectedDepartments.length < 3}
+            />
+            <MultipleSelectCheckmarks
+              names={Statuses.map((el) => el.name)}
+              selectTitle="Statuses"
+              selectedNames={selectedStatuses}
+              onChange={handleStatusesChange}
+              disabled={selectedDepartments.length < 3}
+            />
+            <button
+              onClick={resetFilterHandler}
+              className="content__user-managment-deleteIcon"
             >
-              <path
-                d="M18 5V18C18 18.5304 17.7893 19.0391 17.4142 19.4142C17.0391 19.7893 16.5304 20 16 20H4C3.46957 20 2.96086 19.7893 2.58579 19.4142C2.21071 19.0391 2 18.5304 2 18V5H0V3H20V5H18ZM4 5V18H16V5H4ZM5 0H15V2H5V0Z"
-                fill="#5E626B"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="content__user-managment-addUser">
-          <button>Add User</button>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 5V18C18 18.5304 17.7893 19.0391 17.4142 19.4142C17.0391 19.7893 16.5304 20 16 20H4C3.46957 20 2.96086 19.7893 2.58579 19.4142C2.21071 19.0391 2 18.5304 2 18V5H0V3H20V5H18ZM4 5V18H16V5H4ZM5 0H15V2H5V0Z"
+                  fill="#5E626B"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="content__user-managment-addUser">
+            <button onClick={openModalHandler}>Add User</button>
+          </div>
         </div>
       </div>
-    </div>
+      {showModal && <Modal onShow={showModalHandler} />}
+    </>
   );
 }
