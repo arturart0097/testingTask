@@ -7,6 +7,34 @@ import { useUserContext } from "../../assets/context/index.jsx";
 import ModalSelect from "../Selects/ModalSelect/index.jsx";
 
 function Modal({ onShow }) {
+  const { users, updateUser } = useUserContext();
+  const [formData, setFormData] = useState({
+    name: "",
+    department: "",
+    country: "",
+    status: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      name: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newUser = {
+      name: formData.name,
+      department: { name: formData.department },
+      country: { name: formData.country },
+      status: { name: formData.status },
+    };
+    updateUser([...users, newUser]);
+    setFormData({ name: "", department: "", country: "", status: "" }); // Reset form
+    onShow();
+  };
 
   return createPortal(
     <div
