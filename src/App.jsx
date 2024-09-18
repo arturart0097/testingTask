@@ -1,7 +1,11 @@
-import UsersPage from "./pages/UsersPage";
+import TableUsers from "./components/TableUsers";
 
 function App() {
-  return <UsersPage />;
+  return (
+    <>
+      <TableUsers />
+    </>
+  );
 }
 
 export default App;
