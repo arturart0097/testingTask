@@ -3,7 +3,7 @@ import { postService } from "../../services/data.service";
 
 function useGetDataAttendance(schoolboyId) {
   const { data, isSuccess, isLoading, error, refetch } = useQuery({
-    queryKey: ["attendance", schoolboyId],
+    queryKey: ["attendance"],
     queryFn: () => postService.getAttendance(schoolboyId).then(res => res.data),
     enabled: !!schoolboyId,
   });
