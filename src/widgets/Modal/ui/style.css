@@ -1,0 +1,22 @@
+.modal {
+  width: 35%;
+  height: 170px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal > button {
+  width: 30%;
+  height: 40px;
+  border: none;
+  background-color: #d3d3d3;
+}
