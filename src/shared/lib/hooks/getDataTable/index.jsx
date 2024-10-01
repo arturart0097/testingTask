@@ -1,33 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { postService } from "../../../api/data.service";
+import { students_api } from "../../../api";
 
-export function useGetDataAttendance(schoolboyId) {
-  const { data, isSuccess, isLoading, refetch } = useQuery({
+export const useGetColumns = () => {
+  return useQuery({
+    queryKey: ["columns"],
+    queryFn: () => students_api.getColumns(),
+  });
+};
+
+export const useGetAttendance = () => {
+  return useQuery({
     queryKey: ["attendance"],
-    queryFn: () =>
-      postService.getAttendance(schoolboyId).then((res) => res.data),
-    enabled: !!schoolboyId,
+    queryFn: () => students_api.getRates(),
   });
-
-  return { attendance: data, isSuccess, isLoading, refetch };
-}
-
-export function useGetDataColumn(service) {
-  const { data, isSuccess, isLoading } = useQuery({
-    queryKey: ["column"],
-    queryFn: () => service,
-    select: (data) => data.data.Items,
+};
+export const useGetStudents = () => {
+  return useQuery({
+    queryKey: ["students"],
+    queryFn: () => students_api.getAllStudents(),
   });
-
-  return { column: data, isSuccess, isLoading };
-}
-
-export function useGetDataUsers(service) {
-  const { data, isSuccess, isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => service,
-    select: (data) => data.data,
-  });
-
-  return { user: data, isSuccess, isLoading };
-}
+};

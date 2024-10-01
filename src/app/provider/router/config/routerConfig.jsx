@@ -1,32 +1,12 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy } from "react";
-import App from "../../../App";
-import { Loader } from "../../../../widgets/Loader";
-import NotFoundPage from "../../../../pages/NotFoundPage";
+// import { createBrowserRouter } from "react-router-dom";
+// import { MainPage } from "../../../../pages/MainPage";
+// import { InfoPage } from "../../../../pages/InfoPage";
+// import { ErrorPage } from "../../../../pages/ErrorPage";
 
-const InfoUserPage = lazy(() => import("../../../../pages/InfoUserPage"));
+// const router = createBrowserRouter([
+//   { path: "/", element: <MainPage /> },
+//   { path: "/info/:id", element: <InfoPage /> },
+//   { path: "*", element: <ErrorPage /> },
+// ]);
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <NotFoundPage />,
-  },
-  {
-    path: "/user/:id",
-    element: (
-      <Suspense
-        fallback={
-          <div>
-            <Loader />
-          </div>
-        }
-      >
-        <InfoUserPage />
-      </Suspense>
-    ),
-    errorElement: <NotFoundPage />,
-  },
-]);
-
-export default router;
+// export default router;

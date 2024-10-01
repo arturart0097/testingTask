@@ -1,13 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetDataUsers } from "../shared/lib/hooks/getDataTable";
-import { postService } from "../shared/api/data.service";
+import { useGetUserInfo } from "../../../shared/lib/hooks/getUsersInfo";
 
-export default function InfoUserPage() {
+export default function InfoPage() {
   const { id } = useParams();
-  const { user } = useGetDataUsers(postService.getUser());
+  const { data } = useGetUserInfo(id);
   const navigate = useNavigate();
-
-  const arr = user.Items.find((el) => el.Id == id);
 
   return (
     <div style={{ padding: 20 }}>
@@ -19,7 +16,7 @@ export default function InfoUserPage() {
             color: "#4c1",
           }}
         >
-          {arr.FirstName}
+          {data?.FirstName}
         </span>
       </h2>
       <h2>
@@ -30,7 +27,7 @@ export default function InfoUserPage() {
             color: "#4c1",
           }}
         >
-          {arr.LastName}
+          {data?.LastName}
         </span>
       </h2>
       <h2>
@@ -41,7 +38,7 @@ export default function InfoUserPage() {
             color: "#4c1",
           }}
         >
-          {arr.SecondName}
+          {data?.SecondName}
         </span>
       </h2>
       <button

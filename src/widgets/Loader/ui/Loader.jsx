@@ -1,11 +1,11 @@
 import { Spinner } from "@chakra-ui/spinner";
 
-function Loader() {
+export default function Loader() {
   return (
     <Spinner
       width="70px"
       height="70px"
-      color="#fff"
+      color="#000"
       style={{
         position: "absolute",
         top: "50%",
@@ -15,5 +15,3 @@ function Loader() {
     />
   );
 }
-
-export default Loader

@@ -1,41 +1,30 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postService } from "../../../api/data.service";
-import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { students_api } from "../../../api";
 
-export function useMarkAbsence() {
+export const useMarkRate = () => {
   const queryClient = useQueryClient();
-  const [error, setError] = useState(null);
-
-  const mutation = useMutation({
-    mutationFn: ({ schoolboyId, columnId }) =>
-      postService.markAbsence(schoolboyId, columnId),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["attendance"]);
-      setError(null);
+  return useMutation({
+    mutationKey: ["markRate"],
+    mutationFn: (data) => students_api.markRate(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["attendance"] });
     },
     onError: (error) => {
-      setError(error);
+      console.log(error);
     },
   });
+};
 
-  return { mutation, error };
-}
-
-export function useMarkRemove() {
+export const useUnMarkRate = () => {
   const queryClient = useQueryClient();
-  const [error, setError] = useState(null);
-
-  const mutation = useMutation({
-    mutationFn: ({ schoolboyId, columnId }) =>
-      postService.removeAbsence(schoolboyId, columnId),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["attendance"]);
-      setError(null);
+  return useMutation({
+    mutationKey: ["unMarkRate"],
+    mutationFn: (data) => students_api.unMarkRate(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["attendance"] });
     },
     onError: (error) => {
-      setError(error);
+      console.log(error);
     },
   });
-
-  return { mutation, error };
-}
+};
